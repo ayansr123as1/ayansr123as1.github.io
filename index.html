@@ -10,93 +10,66 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
 
-body{
-  background:#0f172a;
-  color:#fff;
-}
+body{background:#0f172a;color:#fff;}
 
-/* TOP + BOTTOM SPACE (EMPTY FOR ADS) */
-.top-ad{
-  height:80px;
-  margin:10px 20px;
-}
+.top-ad{height:80px;margin:10px 20px;}
+.bottom-ad{height:90px;margin:20px;}
 
-.bottom-ad{
-  height:90px;
-  margin:20px;
-}
+header{text-align:center;font-size:24px;font-weight:600;margin:10px 0;}
 
-/* HEADER */
-header{
-  padding:20px;
-  text-align:center;
-  font-size:24px;
-  font-weight:600;
-}
-
-/* GRID */
 .grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-  gap:15px;
-  padding:20px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+gap:15px;
+padding:20px;
 }
 
-/* CARDS */
 .card{
-  background:#1e293b;
-  padding:20px;
-  border-radius:15px;
-  text-align:center;
-  cursor:pointer;
-  transition:0.3s;
+background:#1e293b;
+padding:20px;
+border-radius:15px;
+text-align:center;
+cursor:pointer;
+transition:0.3s;
 }
 
 .card:hover{
-  transform:translateY(-5px);
-  background:#334155;
+transform:translateY(-5px);
+background:#334155;
 }
 
-.card span{
-  font-size:14px;
-  opacity:0.8;
-}
+.card span{font-size:14px;opacity:0.8;}
 
-/* TOOL AREA */
 .container{
-  padding:20px;
-  display:flex;
-  justify-content:center;
+padding:20px;
+display:flex;
+justify-content:center;
 }
 
 .tool-box{
-  width:100%;
-  max-width:500px;
-  background:#1e293b;
-  padding:25px;
-  border-radius:15px;
-  display:none;
+width:100%;
+max-width:500px;
+background:#1e293b;
+padding:25px;
+border-radius:15px;
+display:none;
 }
 
-/* INPUT */
 input,button{
-  width:100%;
-  padding:12px;
-  margin-top:10px;
-  border:none;
-  border-radius:10px;
+width:100%;
+padding:12px;
+margin-top:10px;
+border:none;
+border-radius:10px;
 }
 
 button{
-  background:#3b82f6;
-  color:white;
-  cursor:pointer;
+background:#3b82f6;
+color:white;
+cursor:pointer;
 }
 
-canvas{
-  max-width:100%;
-  margin-top:10px;
-}
+canvas{max-width:100%;margin-top:10px;}
 </style>
 </head>
 
@@ -117,7 +90,6 @@ canvas{
 
 <div class="container">
 
-<!-- RESIZE -->
 <div id="resize" class="tool-box">
 <h3>Resize Image</h3>
 <input type="file" id="rInput">
@@ -127,7 +99,6 @@ canvas{
 <canvas id="rCanvas"></canvas>
 </div>
 
-<!-- CONVERT -->
 <div id="convert" class="tool-box">
 <h3>JPG → PNG</h3>
 <input type="file" id="cInput">
@@ -135,7 +106,6 @@ canvas{
 <canvas id="cCanvas"></canvas>
 </div>
 
-<!-- COMPRESS -->
 <div id="compress" class="tool-box">
 <h3>Compress</h3>
 <input type="file" id="cpInput">
@@ -143,7 +113,6 @@ canvas{
 <canvas id="cpCanvas"></canvas>
 </div>
 
-<!-- ROTATE -->
 <div id="rotate" class="tool-box">
 <h3>Rotate</h3>
 <input type="file" id="roInput">
@@ -151,7 +120,6 @@ canvas{
 <canvas id="roCanvas"></canvas>
 </div>
 
-<!-- GRAYSCALE -->
 <div id="gray" class="tool-box">
 <h3>Grayscale</h3>
 <input type="file" id="gInput">
@@ -159,7 +127,6 @@ canvas{
 <canvas id="gCanvas"></canvas>
 </div>
 
-<!-- TEXT -->
 <div id="text" class="tool-box">
 <h3>Add Text</h3>
 <input type="file" id="tInput">
@@ -178,54 +145,83 @@ document.querySelectorAll('.tool-box').forEach(t=>t.style.display='none');
 document.getElementById(id).style.display='block';
 }
 
-function process(id,callback){
-let file=document.getElementById(id+'Input').files[0];
+function resize(){
+let file=document.getElementById("rInput").files[0];
+let w=document.getElementById("rw").value;
+let h=document.getElementById("rh").value;
+
 let reader=new FileReader();
-reader.onload=e=>{
+reader.onload=function(e){
 let img=new Image();
-img.onload=()=>callback(img);
+img.onload=function(){
+let c=document.getElementById("rCanvas");
+let ctx=c.getContext("2d");
+c.width=w;c.height=h;
+ctx.drawImage(img,0,0,w,h);
+}
 img.src=e.target.result;
 }
 reader.readAsDataURL(file);
 }
 
-function resize(){
-process('r',img=>{
-let c=rCanvas,ctx=c.getContext('2d');
-c.width=rw.value;c.height=rh.value;
-ctx.drawImage(img,0,0,rw.value,rh.value);
-});
-}
-
 function convert(){
-process('c',img=>{
-let c=cCanvas,ctx=c.getContext('2d');
+let file=document.getElementById("cInput").files[0];
+let reader=new FileReader();
+reader.onload=function(e){
+let img=new Image();
+img.onload=function(){
+let c=document.getElementById("cCanvas");
+let ctx=c.getContext("2d");
 c.width=img.width;c.height=img.height;
 ctx.drawImage(img,0,0);
-});
+}
+img.src=e.target.result;
+}
+reader.readAsDataURL(file);
 }
 
 function compress(){
-process('cp',img=>{
-let c=cpCanvas,ctx=c.getContext('2d');
+let file=document.getElementById("cpInput").files[0];
+let reader=new FileReader();
+reader.onload=function(e){
+let img=new Image();
+img.onload=function(){
+let c=document.getElementById("cpCanvas");
+let ctx=c.getContext("2d");
 c.width=img.width;c.height=img.height;
 ctx.drawImage(img,0,0);
-});
+}
+img.src=e.target.result;
+}
+reader.readAsDataURL(file);
 }
 
 function rotate(){
-process('ro',img=>{
-let c=roCanvas,ctx=c.getContext('2d');
+let file=document.getElementById("roInput").files[0];
+let reader=new FileReader();
+reader.onload=function(e){
+let img=new Image();
+img.onload=function(){
+let c=document.getElementById("roCanvas");
+let ctx=c.getContext("2d");
 c.width=img.height;c.height=img.width;
 ctx.translate(c.width/2,c.height/2);
 ctx.rotate(Math.PI/2);
 ctx.drawImage(img,-img.width/2,-img.height/2);
-});
+}
+img.src=e.target.result;
+}
+reader.readAsDataURL(file);
 }
 
 function gray(){
-process('g',img=>{
-let c=gCanvas,ctx=c.getContext('2d');
+let file=document.getElementById("gInput").files[0];
+let reader=new FileReader();
+reader.onload=function(e){
+let img=new Image();
+img.onload=function(){
+let c=document.getElementById("gCanvas");
+let ctx=c.getContext("2d");
 c.width=img.width;c.height=img.height;
 ctx.drawImage(img,0,0);
 let d=ctx.getImageData(0,0,c.width,c.height);
@@ -234,18 +230,31 @@ let avg=(d.data[i]+d.data[i+1]+d.data[i+2])/3;
 d.data[i]=d.data[i+1]=d.data[i+2]=avg;
 }
 ctx.putImageData(d,0,0);
-});
+}
+img.src=e.target.result;
+}
+reader.readAsDataURL(file);
 }
 
 function addText(){
-process('t',img=>{
-let c=tCanvas,ctx=c.getContext('2d');
+let file=document.getElementById("tInput").files[0];
+let text=document.getElementById("txt").value;
+
+let reader=new FileReader();
+reader.onload=function(e){
+let img=new Image();
+img.onload=function(){
+let c=document.getElementById("tCanvas");
+let ctx=c.getContext("2d");
 c.width=img.width;c.height=img.height;
 ctx.drawImage(img,0,0);
 ctx.fillStyle="white";
 ctx.font="30px Arial";
-ctx.fillText(txt.value,20,40);
-});
+ctx.fillText(text,20,40);
+}
+img.src=e.target.result;
+}
+reader.readAsDataURL(file);
 }
 </script>
 
