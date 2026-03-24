@@ -150,13 +150,17 @@ let file=document.getElementById("rInput").files[0];
 let w=document.getElementById("rw").value;
 let h=document.getElementById("rh").value;
 
+if(!file){ alert("Select image"); return; }
+if(!w || !h){ alert("Enter width & height"); return; }
+
 let reader=new FileReader();
 reader.onload=function(e){
 let img=new Image();
 img.onload=function(){
 let c=document.getElementById("rCanvas");
 let ctx=c.getContext("2d");
-c.width=w;c.height=h;
+c.width=w;
+c.height=h;
 ctx.drawImage(img,0,0,w,h);
 }
 img.src=e.target.result;
@@ -166,13 +170,16 @@ reader.readAsDataURL(file);
 
 function convert(){
 let file=document.getElementById("cInput").files[0];
+if(!file){ alert("Select image"); return; }
+
 let reader=new FileReader();
 reader.onload=function(e){
 let img=new Image();
 img.onload=function(){
 let c=document.getElementById("cCanvas");
 let ctx=c.getContext("2d");
-c.width=img.width;c.height=img.height;
+c.width=img.width;
+c.height=img.height;
 ctx.drawImage(img,0,0);
 }
 img.src=e.target.result;
@@ -182,13 +189,16 @@ reader.readAsDataURL(file);
 
 function compress(){
 let file=document.getElementById("cpInput").files[0];
+if(!file){ alert("Select image"); return; }
+
 let reader=new FileReader();
 reader.onload=function(e){
 let img=new Image();
 img.onload=function(){
 let c=document.getElementById("cpCanvas");
 let ctx=c.getContext("2d");
-c.width=img.width;c.height=img.height;
+c.width=img.width;
+c.height=img.height;
 ctx.drawImage(img,0,0);
 }
 img.src=e.target.result;
@@ -198,13 +208,16 @@ reader.readAsDataURL(file);
 
 function rotate(){
 let file=document.getElementById("roInput").files[0];
+if(!file){ alert("Select image"); return; }
+
 let reader=new FileReader();
 reader.onload=function(e){
 let img=new Image();
 img.onload=function(){
 let c=document.getElementById("roCanvas");
 let ctx=c.getContext("2d");
-c.width=img.height;c.height=img.width;
+c.width=img.height;
+c.height=img.width;
 ctx.translate(c.width/2,c.height/2);
 ctx.rotate(Math.PI/2);
 ctx.drawImage(img,-img.width/2,-img.height/2);
@@ -216,13 +229,16 @@ reader.readAsDataURL(file);
 
 function gray(){
 let file=document.getElementById("gInput").files[0];
+if(!file){ alert("Select image"); return; }
+
 let reader=new FileReader();
 reader.onload=function(e){
 let img=new Image();
 img.onload=function(){
 let c=document.getElementById("gCanvas");
 let ctx=c.getContext("2d");
-c.width=img.width;c.height=img.height;
+c.width=img.width;
+c.height=img.height;
 ctx.drawImage(img,0,0);
 let d=ctx.getImageData(0,0,c.width,c.height);
 for(let i=0;i<d.data.length;i+=4){
@@ -240,13 +256,16 @@ function addText(){
 let file=document.getElementById("tInput").files[0];
 let text=document.getElementById("txt").value;
 
+if(!file){ alert("Select image"); return; }
+
 let reader=new FileReader();
 reader.onload=function(e){
 let img=new Image();
 img.onload=function(){
 let c=document.getElementById("tCanvas");
 let ctx=c.getContext("2d");
-c.width=img.width;c.height=img.height;
+c.width=img.width;
+c.height=img.height;
 ctx.drawImage(img,0,0);
 ctx.fillStyle="white";
 ctx.font="30px Arial";
