@@ -3,61 +3,77 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7988764823800661"
      crossorigin="anonymous"></script>
-<title>ToolsHub Pro</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+<title>ToolsHub Pro</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif}
 
-body{background:#0f172a;color:#fff;}
+body{
+background:linear-gradient(135deg,#020617,#0f172a);
+color:#fff;
+}
 
-.top-ad{height:80px;margin:10px 20px;}
-.bottom-ad{height:90px;margin:20px;}
+/* HEADER */
+header{
+text-align:center;
+font-size:34px;
+padding:25px;
+font-weight:700;
+background:linear-gradient(90deg,#3b82f6,#06b6d4);
+-webkit-background-clip:text;
+color:transparent;
+}
 
-header{text-align:center;font-size:24px;font-weight:600;margin:10px 0;}
-
+/* GRID */
 .grid{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-gap:15px;
-padding:20px;
+gap:18px;
+padding:25px;
 }
 
+/* CARD */
 .card{
-background:#1e293b;
-padding:20px;
-border-radius:15px;
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(12px);
+border:1px solid rgba(255,255,255,0.1);
+padding:22px;
+border-radius:18px;
 text-align:center;
 cursor:pointer;
 transition:0.3s;
+font-weight:500;
 }
 
 .card:hover{
-transform:translateY(-5px);
-background:#334155;
+transform:translateY(-8px) scale(1.05);
+box-shadow:0 10px 25px rgba(0,0,0,0.6);
 }
 
-.card span{font-size:14px;opacity:0.8;}
-
+/* TOOL BOX */
 .container{
-padding:20px;
 display:flex;
 justify-content:center;
+padding:20px;
 }
 
 .tool-box{
 width:100%;
-max-width:500px;
-background:#1e293b;
+max-width:650px;
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.1);
 padding:25px;
-border-radius:15px;
+border-radius:20px;
 display:none;
 }
 
-input,button{
+/* INPUT */
+input,textarea,select,button{
 width:100%;
 padding:12px;
 margin-top:10px;
@@ -66,34 +82,42 @@ border-radius:10px;
 }
 
 button{
-background:#3b82f6;
-color:white;
+background:linear-gradient(90deg,#3b82f6,#06b6d4);
+color:#fff;
 cursor:pointer;
 }
 
-canvas{max-width:100%;margin-top:10px;}
+button:hover{
+transform:scale(1.05);
+}
+
+canvas{width:100%;margin-top:10px}
 </style>
 </head>
 
 <body>
 
-<div class="top-ad"></div>
-
 <header>⚡ ToolsHub Pro</header>
 
 <div class="grid">
-  <div class="card" onclick="openTool('resize')">📏<br><span>Resize</span></div>
-  <div class="card" onclick="openTool('convert')">🔄<br><span>JPG→PNG</span></div>
-  <div class="card" onclick="openTool('compress')">🗜️<br><span>Compress</span></div>
-  <div class="card" onclick="openTool('rotate')">🔁<br><span>Rotate</span></div>
-  <div class="card" onclick="openTool('gray')">⚫<br><span>Grayscale</span></div>
-  <div class="card" onclick="openTool('text')">✍️<br><span>Add Text</span></div>
+<div class="card" onclick="openTool('resize')">📏 Resize</div>
+<div class="card" onclick="openTool('convert')">🔄 Convert</div>
+<div class="card" onclick="openTool('rotate')">🔁 Rotate</div>
+<div class="card" onclick="openTool('gray')">⚫ Grayscale</div>
+<div class="card" onclick="openTool('crop')">✂️ Crop</div>
+<div class="card" onclick="openTool('text')">✍️ Text</div>
+<div class="card" onclick="openTool('qr')">📱 QR</div>
+<div class="card" onclick="openTool('password')">🔐 Password</div>
+<div class="card" onclick="openTool('word')">📝 Word Count</div>
+<div class="card" onclick="openTool('reverse')">🔁 Reverse</div>
+<div class="card" onclick="openTool('random')">🎲 Random</div>
 </div>
 
 <div class="container">
 
+<!-- RESIZE -->
 <div id="resize" class="tool-box">
-<h3>Resize Image</h3>
+<h3>Resize</h3>
 <input type="file" id="rInput">
 <input id="rw" placeholder="Width">
 <input id="rh" placeholder="Height">
@@ -101,6 +125,7 @@ canvas{max-width:100%;margin-top:10px;}
 <canvas id="rCanvas"></canvas>
 </div>
 
+<!-- CONVERT -->
 <div id="convert" class="tool-box">
 <h3>JPG → PNG</h3>
 <input type="file" id="cInput">
@@ -108,13 +133,7 @@ canvas{max-width:100%;margin-top:10px;}
 <canvas id="cCanvas"></canvas>
 </div>
 
-<div id="compress" class="tool-box">
-<h3>Compress</h3>
-<input type="file" id="cpInput">
-<button onclick="compress()">Compress</button>
-<canvas id="cpCanvas"></canvas>
-</div>
-
+<!-- ROTATE -->
 <div id="rotate" class="tool-box">
 <h3>Rotate</h3>
 <input type="file" id="roInput">
@@ -122,6 +141,7 @@ canvas{max-width:100%;margin-top:10px;}
 <canvas id="roCanvas"></canvas>
 </div>
 
+<!-- GRAY -->
 <div id="gray" class="tool-box">
 <h3>Grayscale</h3>
 <input type="file" id="gInput">
@@ -129,17 +149,73 @@ canvas{max-width:100%;margin-top:10px;}
 <canvas id="gCanvas"></canvas>
 </div>
 
+<!-- CROP -->
+<div id="crop" class="tool-box">
+<h3>Crop</h3>
+<input type="file" id="crInput">
+<input id="cx" placeholder="X">
+<input id="cy" placeholder="Y">
+<input id="cw" placeholder="Width">
+<input id="ch" placeholder="Height">
+<button onclick="crop()">Crop</button>
+<canvas id="crCanvas"></canvas>
+</div>
+
+<!-- TEXT -->
 <div id="text" class="tool-box">
 <h3>Add Text</h3>
 <input type="file" id="tInput">
-<input id="txt" placeholder="Enter text">
+<input id="txt" placeholder="Text">
+<input type="color" id="color">
+<input id="size" placeholder="Font size">
+<input id="x" placeholder="X position">
+<input id="y" placeholder="Y position">
 <button onclick="addText()">Apply</button>
 <canvas id="tCanvas"></canvas>
 </div>
 
+<!-- QR -->
+<div id="qr" class="tool-box">
+<h3>QR Generator</h3>
+<input id="qrText">
+<button onclick="qr()">Generate</button>
+<div id="qrOut"></div>
 </div>
 
-<div class="bottom-ad"></div>
+<!-- PASSWORD -->
+<div id="password" class="tool-box">
+<h3>Password Generator</h3>
+<input id="len" placeholder="Length">
+<button onclick="passGen()">Generate</button>
+<input id="pass">
+</div>
+
+<!-- WORD COUNT -->
+<div id="word" class="tool-box">
+<h3>Word Count</h3>
+<textarea id="wc"></textarea>
+<button onclick="count()">Count</button>
+<input id="out">
+</div>
+
+<!-- REVERSE -->
+<div id="reverse" class="tool-box">
+<h3>Reverse Text</h3>
+<input id="rev">
+<button onclick="reverse()">Reverse</button>
+<input id="revOut">
+</div>
+
+<!-- RANDOM -->
+<div id="random" class="tool-box">
+<h3>Random Number</h3>
+<input id="min">
+<input id="max">
+<button onclick="randomNum()">Generate</button>
+<input id="randOut">
+</div>
+
+</div>
 
 <script>
 function openTool(id){
@@ -147,135 +223,98 @@ document.querySelectorAll('.tool-box').forEach(t=>t.style.display='none');
 document.getElementById(id).style.display='block';
 }
 
+function load(id,cb){
+let f=document.getElementById(id+'Input').files[0];
+if(!f){alert('Select image');return;}
+let r=new FileReader();
+r.onload=e=>{
+let i=new Image();
+i.onload=()=>cb(i);
+i.src=e.target.result;
+}
+r.readAsDataURL(f);
+}
+
 function resize(){
-let file=document.getElementById("rInput").files[0];
-let w=document.getElementById("rw").value;
-let h=document.getElementById("rh").value;
-
-if(!file){ alert("Select image"); return; }
-if(!w || !h){ alert("Enter width & height"); return; }
-
-let reader=new FileReader();
-reader.onload=function(e){
-let img=new Image();
-img.onload=function(){
-let c=document.getElementById("rCanvas");
-let ctx=c.getContext("2d");
-c.width=w;
-c.height=h;
-ctx.drawImage(img,0,0,w,h);
-}
-img.src=e.target.result;
-}
-reader.readAsDataURL(file);
+load('r',i=>{
+let c=rCanvas,ctx=c.getContext('2d');
+c.width=rw.value;c.height=rh.value;
+ctx.drawImage(i,0,0,rw.value,rh.value);
+});
 }
 
 function convert(){
-let file=document.getElementById("cInput").files[0];
-if(!file){ alert("Select image"); return; }
-
-let reader=new FileReader();
-reader.onload=function(e){
-let img=new Image();
-img.onload=function(){
-let c=document.getElementById("cCanvas");
-let ctx=c.getContext("2d");
-c.width=img.width;
-c.height=img.height;
-ctx.drawImage(img,0,0);
-}
-img.src=e.target.result;
-}
-reader.readAsDataURL(file);
-}
-
-function compress(){
-let file=document.getElementById("cpInput").files[0];
-if(!file){ alert("Select image"); return; }
-
-let reader=new FileReader();
-reader.onload=function(e){
-let img=new Image();
-img.onload=function(){
-let c=document.getElementById("cpCanvas");
-let ctx=c.getContext("2d");
-c.width=img.width;
-c.height=img.height;
-ctx.drawImage(img,0,0);
-}
-img.src=e.target.result;
-}
-reader.readAsDataURL(file);
+load('c',i=>{
+let c=cCanvas,ctx=c.getContext('2d');
+c.width=i.width;c.height=i.height;
+ctx.drawImage(i,0,0);
+});
 }
 
 function rotate(){
-let file=document.getElementById("roInput").files[0];
-if(!file){ alert("Select image"); return; }
-
-let reader=new FileReader();
-reader.onload=function(e){
-let img=new Image();
-img.onload=function(){
-let c=document.getElementById("roCanvas");
-let ctx=c.getContext("2d");
-c.width=img.height;
-c.height=img.width;
+load('ro',i=>{
+let c=roCanvas,ctx=c.getContext('2d');
+c.width=i.height;c.height=i.width;
 ctx.translate(c.width/2,c.height/2);
 ctx.rotate(Math.PI/2);
-ctx.drawImage(img,-img.width/2,-img.height/2);
-}
-img.src=e.target.result;
-}
-reader.readAsDataURL(file);
+ctx.drawImage(i,-i.width/2,-i.height/2);
+});
 }
 
 function gray(){
-let file=document.getElementById("gInput").files[0];
-if(!file){ alert("Select image"); return; }
-
-let reader=new FileReader();
-reader.onload=function(e){
-let img=new Image();
-img.onload=function(){
-let c=document.getElementById("gCanvas");
-let ctx=c.getContext("2d");
-c.width=img.width;
-c.height=img.height;
-ctx.drawImage(img,0,0);
+load('g',i=>{
+let c=gCanvas,ctx=c.getContext('2d');
+c.width=i.width;c.height=i.height;
+ctx.drawImage(i,0,0);
 let d=ctx.getImageData(0,0,c.width,c.height);
-for(let i=0;i<d.data.length;i+=4){
-let avg=(d.data[i]+d.data[i+1]+d.data[i+2])/3;
-d.data[i]=d.data[i+1]=d.data[i+2]=avg;
+for(let x=0;x<d.data.length;x+=4){
+let a=(d.data[x]+d.data[x+1]+d.data[x+2])/3;
+d.data[x]=d.data[x+1]=d.data[x+2]=a;
 }
 ctx.putImageData(d,0,0);
+});
 }
-img.src=e.target.result;
-}
-reader.readAsDataURL(file);
+
+function crop(){
+load('cr',i=>{
+let c=crCanvas,ctx=c.getContext('2d');
+c.width=cw.value;c.height=ch.value;
+ctx.drawImage(i,cx.value,cy.value,cw.value,ch.value,0,0,cw.value,ch.value);
+});
 }
 
 function addText(){
-let file=document.getElementById("tInput").files[0];
-let text=document.getElementById("txt").value;
-
-if(!file){ alert("Select image"); return; }
-
-let reader=new FileReader();
-reader.onload=function(e){
-let img=new Image();
-img.onload=function(){
-let c=document.getElementById("tCanvas");
-let ctx=c.getContext("2d");
-c.width=img.width;
-c.height=img.height;
-ctx.drawImage(img,0,0);
-ctx.fillStyle="white";
-ctx.font="30px Arial";
-ctx.fillText(text,20,40);
+load('t',i=>{
+let c=tCanvas,ctx=c.getContext('2d');
+c.width=i.width;c.height=i.height;
+ctx.drawImage(i,0,0);
+ctx.fillStyle=color.value;
+ctx.font=(size.value||30)+'px Arial';
+ctx.fillText(txt.value,x.value||20,y.value||40);
+});
 }
-img.src=e.target.result;
+
+function qr(){
+qrOut.innerHTML=`<img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${qrText.value}">`;
 }
-reader.readAsDataURL(file);
+
+function passGen(){
+let l=len.value||8,s="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",p="";
+for(let i=0;i<l;i++)p+=s[Math.floor(Math.random()*s.length)];
+pass.value=p;
+}
+
+function count(){
+out.value=wc.value.split(/\\s+/).length;
+}
+
+function reverse(){
+revOut.value=rev.value.split('').reverse().join('');
+}
+
+function randomNum(){
+let a=parseInt(min.value)||0,b=parseInt(max.value)||100;
+randOut.value=Math.floor(Math.random()*(b-a+1))+a;
 }
 </script>
 
